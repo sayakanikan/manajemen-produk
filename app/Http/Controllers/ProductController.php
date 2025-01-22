@@ -14,7 +14,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if ($request->search != null) {
-            $product = Product::with('category')->where('name', 'LIKE', '%'.$request->search.'%')->orWhere('price', 'LIKE', '%'.$request->search.'%')->orWhere('stock_quantity', 'LIKE', '%'.$request->search.'%')->get();
+            $product = Product::with('category')->where('name', 'LIKE', '%' . $request->search . '%')->orWhere('price', 'LIKE', '%' . $request->search . '%')->orWhere('stock_quantity', 'LIKE', '%' . $request->search . '%')->get();
         } else {
             $product = Product::with('category')->get();
         }
@@ -43,14 +43,16 @@ class ProductController extends Controller
                 'name' => 'required|string',
                 'price' => 'required|numeric',
                 'stock_quantity' => 'required|numeric',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             ]);
 
             if ($validator->fails()) {
                 throw new Exception($validator->errors());
             }
-            
-            if ($request->image != null) {
-                Storage::put('products', $request->image);
+
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('products', 'public');
             }
 
             Product::create([
@@ -59,7 +61,7 @@ class ProductController extends Controller
                 "description" => $request->description,
                 "price" => $request->price,
                 "stock_quantity" => $request->stock_quantity,
-                "image" => $request->image
+                "image" => $imagePath,
             ]);
 
             return redirect('/product')->with('success', 'Product berhasil ditambahkan');
@@ -68,7 +70,8 @@ class ProductController extends Controller
         }
     }
 
-    public function show(Product $product) {
+    public function show(Product $product)
+    {
         $product = Product::with('category')->where('id', $product->id)->first();
         return view('content/product/detail', [
             'title' => 'Detail Product',
@@ -95,19 +98,29 @@ class ProductController extends Controller
                 'name' => 'required|string',
                 'price' => 'required|numeric',
                 'stock_quantity' => 'required|numeric',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
             if ($validator->fails()) {
                 throw new Exception($validator->errors());
             }
-            
+
+            $imagePath = $product->image;
+            if ($request->hasFile('image')) {
+                if ($product->image && Storage::exists('public/' . $product->image)) {
+                    Storage::delete('public/' . $product->image);
+                }
+
+                $imagePath = $request->file('image')->store('products', 'public');
+            }
+
             $product->update([
                 "category_id" => $request->category_id,
                 "name" => $request->name,
                 "description" => $request->description,
                 "price" => $request->price,
                 "stock_quantity" => $request->stock_quantity,
-                "image" => $request->image
+                "image" => $imagePath,
             ]);
 
             return redirect('/product')->with('success', 'Product berhasil diupdate');

@@ -19,7 +19,7 @@
               @if (!asset('storage/' . $data->image) || $data->image == null)
                 <img src="../../template/images/no-product.png" alt="profile" style="max-width: 100%; max-height: 100%; display:block;">                    
               @else
-                <img src="{{ asset('storage/' . $data->image) }}" alt="profile" class="rounded-circle" style="width: 300px; height: 300px; display:block; object-fit:cover">                    
+                <img src="{{ asset('storage/' . $data->image) }}" alt="profile" style="width: 300px; height: 300px; display:block; object-fit:cover">                    
               @endif
             </div>
             <div class="col-md-8 d-flex my-auto">
