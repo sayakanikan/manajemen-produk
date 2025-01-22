@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -46,7 +47,7 @@ class CategoryController extends Controller
                 "name" => $request->name
             ]);
 
-            return redirect()->view('index')->with('success', 'Category berhasil ditambahkan');
+            return redirect('/category')->with('success', 'Category added successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -83,7 +84,7 @@ class CategoryController extends Controller
                 "name" => $request->name
             ]);
 
-            return redirect()->view('index')->with('success', 'Category berhasil diupdate');
+            return redirect('/category')->with('success', 'Category updated successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -92,9 +93,16 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
+            // Validate
+            $product = Product::where('category_id', $category->id)->get();
+
+            if (count($product) > 0) {
+                throw new Exception("Category can't be deleted because it's still used by some products");
+            }
+
             $category->delete();
 
-            return redirect()->view('index')->with('success', 'Category berhasil dihapus');
+            return redirect('/category')->with('success', 'Category deleted successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

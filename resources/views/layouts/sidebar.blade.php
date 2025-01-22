@@ -15,7 +15,7 @@
     <li class="nav-item {{ Request::is('product*') ? 'active' : '' }}">
       <a class="nav-link " href="/product">
         <i class="icon-grid menu-icon ti-package"></i>
-        <span class="menu-title">Produk</span>
+        <span class="menu-title">Product</span>
       </a>
     </li>
     {{-- <li class="nav-item {{ Request::is('akun') ? 'active' : '' }}">

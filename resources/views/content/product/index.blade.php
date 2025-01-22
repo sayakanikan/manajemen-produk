@@ -47,7 +47,6 @@
               <thead>
                 <tr>
                   <th scope="col">Action</th>
-                  <th scope="col">Image</th>
                   <th scope="col">Name</th>
                   <th scope="col">Category</th>
                   <th scope="col">Price</th>
@@ -55,20 +54,27 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach ($data as $item)
+                @if ($data->count() > 0)
+                  @foreach ($data as $item)
+                    <tr>
+                      <td>
+                        <a href="/product/{{ $item->id }}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
+                        <a href="/product/{{ $item->id }}/edit" class="btn btn-warning btn-sm"><i class="ti-pencil-alt"></i></a>
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="handleDelete({{ $item->id }})"><i class="ti-trash"></i></button>
+                      </td>
+                      <td>{{ $item->name }}</td>
+                      <td>{{ $item->category->name }}</td>
+                      <td>$ {{ $item->price }}</td>
+                      <td>{{ $item->stock_quantity }}</td>
+                    </tr>
+                  @endforeach
+                @else
                   <tr>
-                    <td>
-                      <a href="/product/{{ $item->id }}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
-                      <a href="/product/{{ $item->id }}/edit" class="btn btn-warning btn-sm"><i class="ti-pencil-alt"></i></a>
-                      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="handleDelete({{ $item->id }})"><i class="ti-trash"></i></button>
+                    <td colspan="6" class="text-center">
+                      No data available.
                     </td>
-                    <td>{{ $item->image }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->category->name }}</td>
-                    <td>$ {{ $item->price }}</td>
-                    <td>{{ $item->stock_quantity }}</td>
                   </tr>
-                @endforeach
+                @endif
               </tbody>
             </table>
           </div>

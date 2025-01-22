@@ -51,6 +51,7 @@
                 </tr>
               </thead>
               <tbody>
+                @if ($data->count() > 0)
                 @foreach ($data as $item)
                   <tr>
                     <td>
@@ -60,6 +61,13 @@
                     <td>{{ $item->name }}</td>
                   </tr>
                 @endforeach
+                @else
+                <tr>
+                  <td colspan="2" class="text-center">
+                    No data available.
+                  </td>
+                </tr>
+                @endif
               </tbody>
             </table>
           </div>
