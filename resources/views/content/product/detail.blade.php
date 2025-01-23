@@ -43,7 +43,7 @@
                   <tr>
                     <td>Price</td>
                     <td>:</td>
-                    <td>{{ $data->price }}</td>
+                    <td>{{ number_format($data->price, 2, '.', ',') }}</td>
                   </tr>
                   <tr>
                     <td>Stock</td>

@@ -11,7 +11,9 @@ class Purchase extends Model
     /** @use HasFactory<\Database\Factories\PurchaseFactory> */
     use HasFactory;
 
-    public function purchase(): BelongsTo
+    protected $guarded = ['id'];
+
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

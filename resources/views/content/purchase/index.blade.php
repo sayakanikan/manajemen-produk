@@ -5,7 +5,7 @@
     <div class="col-md-12 grid-margin">
       <div class="row">
         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-          <h3 class="font-weight-bold">Product</h3>
+          <h3 class="font-weight-bold">Monitoring Purchase</h3>
         </div>
       </div>
     </div>
@@ -15,8 +15,7 @@
       <div class="card p-4">
         <div class="card-body">
           <div class="d-flex justify-content-between mb-3">
-            <a href="/product/create" class="btn btn-primary btn-sm mb-3 font-weight-bold my-auto"><i class="ti-plus mr-2"></i>Add Product</a>
-            <form action="/product" method="get">
+            <form action="/purchase" method="get">
               <input type="text" name="search" class="form-control" placeholder="Search Product..." aria-label="Search...">
             </form>
           </div>
@@ -46,26 +45,22 @@
             <table class="table table-hover table-striped">
               <thead>
                 <tr>
-                  <th scope="col">Action</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Category</th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Quantity</th>
                   <th scope="col">Price</th>
-                  <th scope="col">Stock</th>
+                  <th scope="col">Total Price</th>
+                  <th scope="col">Date</th>
                 </tr>
               </thead>
               <tbody>
                 @if ($data->count() > 0)
                   @foreach ($data as $item)
                     <tr>
-                      <td>
-                        <a href="/product/{{ $item->id }}" class="btn btn-info btn-sm"><i class="ti-eye"></i></a>
-                        <a href="/product/{{ $item->id }}/edit" class="btn btn-warning btn-sm"><i class="ti-pencil-alt"></i></a>
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="handleDelete({{ $item->id }})"><i class="ti-trash"></i></button>
-                      </td>
-                      <td>{{ $item->name }}</td>
-                      <td>{{ $item->category->name }}</td>
-                      <td>$ {{ number_format($item->price, 2, '.', ',') }}</td>
-                      <td>{{ $item->stock_quantity }}</td>
+                      <td>{{ $item->product->name }}</td>
+                      <td>{{ $item->quantity }}</td>
+                      <td>$ {{ number_format($item->product->price, 2, '.', ',') }}</td>
+                      <td>$ {{ number_format($item->total_price, 2, '.', ',') }}</td>
+                      <td>{{ $item->created_at->format('d M Y, H:i') }}</td>
                     </tr>
                   @endforeach
                 @else
@@ -78,43 +73,8 @@
               </tbody>
             </table>
           </div>
-          {{-- <div class="d-flex">
-            <div class=" mt-3 mx-auto">
-              {{ $data->links() }}
-            </div>
-          </div> --}}
         </div>
       </div>
     </div>
   </div>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div>
-          <button type="button" class="close mt-4 mr-5 justify-content-end " data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body d-flex flex-column ">
-          <img src="../../template/images/warning.png" width="90px" class="mx-auto" alt="warning">
-          <br>
-          <h3 class="text-center text-muted">Are you sure want to delete this product?</h3>
-        </div>
-        <div class="modal-footer mx-auto mb-4">
-          <form id="formDelete" method="POST">
-            @method('delete')
-            @csrf
-            <button type="submit" class="btn btn-danger">Yes</button>
-          </form>
-          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    function handleDelete(id){
-      document.getElementById('formDelete').action = `/product/${id}`
-    }
-  </script>
 @endsection

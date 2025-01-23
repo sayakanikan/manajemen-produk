@@ -1,2 +1,5 @@
-<h1>test</h1>
-<a href="/product">ke produk</a>
+@extends('layouts/main')
+
+@section('content')
+  <h3>Dashboard</h3>
+@endsection
