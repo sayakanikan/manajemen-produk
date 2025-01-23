@@ -49,12 +49,12 @@
               <p class="card-text">${{ number_format($item->price, 2, '.', ',') }}</p>
             </div>
             <p class="card-text">{{ $item->description }}</p>
-            <div class="flex justify-content-between">
+            <div class="d-flex justify-content-between">
               @if($item->stock_quantity == 0)
-                <button type="button" disabled class="btn btn-secondary"><i class="ti-na"></i> Out of stock</button>
+                <button type="button" disabled class="btn btn-secondary btn-sm"><i class="ti-na"></i> Out of stock</button>
               @else
-                <input type="number" value="1" min="1" id="input_quantity_{{ $item->id }}">
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="handleBuy({{ $item->id }})"><i class="ti-shopping-cart-full"></i> Buy Now</button>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="handleBuy({{ $item->id }})"><i class="ti-shopping-cart-full"></i> Buy Now </button>
+                <input type="number" class="form-control" value="1" min="1" id="input_quantity_{{ $item->id }}" style="max-width: 60px; padding: 0 10px;">
               @endif
             </div>
           </div>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\StockMovement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -93,6 +95,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         try {
+            DB::beginTransaction();
             $validator = Validator::make($request->all(), [
                 'category_id' => 'required|numeric',
                 'name' => 'required|string',
@@ -114,6 +117,22 @@ class ProductController extends Controller
                 $imagePath = $request->file('image')->store('products', 'public');
             }
 
+            if ($request->stock_quantity > $product->stock_quantity) {
+                StockMovement::create([
+                    'product_id' => $product->id,
+                    'quantity' => $request->stock_quantity,
+                    'change_type' => 'increase',
+                ]);
+            }
+
+            if ($request->stock_quantity < $product->stock_quantity) {
+                StockMovement::create([
+                    'product_id' => $product->id,
+                    'quantity' => $request->stock_quantity,
+                    'change_type' => 'descrease',
+                ]);
+            }
+
             $product->update([
                 "category_id" => $request->category_id,
                 "name" => $request->name,
@@ -123,8 +142,10 @@ class ProductController extends Controller
                 "image" => $imagePath,
             ]);
 
+            DB::commit();
             return redirect('/product')->with('success', 'Product berhasil diupdate');
         } catch (Exception $e) {
+            DB::rollBack();
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

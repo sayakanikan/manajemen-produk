@@ -9080,6 +9080,16 @@ small,
   font-weight: 400;
 }
 
+.btn-logout {
+  color: black;
+  border:none;
+  background-color: transparent;
+}
+
+.btn-logout :hover {
+  color: white;
+}
+
 mark,
 .mark {
   padding: 0.2em;
@@ -28467,7 +28477,7 @@ div.tagsinput span.tag a {
 .content-wrapper-auth {
   /* background: rgb(165,243,252);
   background: linear-gradient(90deg, rgba(165,243,252,1) 0%, rgba(186,230,253,1) 50%, rgba(191,219,254,1) 100%); */
-  background-image: url('../../../../template/images/banner_topi.jpg');
+  background-image: url('../../../../template/images/login-bg.jpg');
   background-size: cover;
   padding: 2.375rem 2.375rem;
   width: 100%;

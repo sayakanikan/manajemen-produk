@@ -36,7 +36,7 @@
         <span class="menu-title">Shop</span>
       </a>
     </li>
-    {{-- <li class="nav-item {{ Request::is('akun') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('akun') ? 'active' : '' }}">
       <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
         <i class="icon-grid-2 menu-icon ti-settings mb-1"></i>
         <span class="menu-title">Your Account</span>
@@ -44,7 +44,6 @@
       </a>
       <div class="collapse" id="tables">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"> <a class="nav-link" href="/akun">Profile</a></li>
           <li class="nav-item"> 
             <form action="/logout" method="POST" class="nav-link">
               @csrf
@@ -53,7 +52,7 @@
           </li>
         </ul>
       </div>
-    </li> --}}
+    </li>
     
   </ul>
 </nav>
