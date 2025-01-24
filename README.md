@@ -12,7 +12,7 @@ Aplikasi manajemen produk yang bisa digunakan untuk memanajemen produk, kategori
 8. Jalankan perintah `php artisan serve` di terminal
 
 ### Daftar Fitur tersedia
-1. Login-Logout-Register
+1. Login-Logout -> email: test@gmail.com || password: password
 2. CRUD Kategori
 3. CRUD Produk
 4. Pembelian Produk
