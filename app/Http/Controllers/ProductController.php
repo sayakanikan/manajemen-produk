@@ -179,12 +179,16 @@ class ProductController extends Controller
 
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx,csv'
-        ]);
+        try {
+            $request->validate([
+                'file' => 'required|file|mimes:xlsx'
+            ]);
 
-        Excel::import(new ProductsImport, $request->file('file'));
+            Excel::import(new ProductsImport, $request->file('file'));
 
-        return back()->with('success', 'Data produk berhasil diimport!');
+            return back()->with('success', 'Data imported successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

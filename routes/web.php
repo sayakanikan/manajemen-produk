@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/product/import', [ProductController::class, 'import']);
   Route::resource('product', ProductController::class);
 
-  Route::get('/category/export/{type}', [CategoryController::class, 'export']);
+  Route::get('/category/export/{format}', [CategoryController::class, 'export']);
   Route::post('/category/import', [CategoryController::class, 'import']);
   Route::resource('category', CategoryController::class);
   

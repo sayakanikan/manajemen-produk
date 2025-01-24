@@ -20,7 +20,7 @@ class CategoriesExport implements FromCollection, WithHeadings, WithMapping
     public function headings(): array
     {
         return [
-            'Name',
+            'Category Name',
         ];
     }
 

@@ -18,7 +18,7 @@
             <div class="grid gap-3">
               <a href="/product/create" class="btn btn-primary btn-sm mb-3 font-weight-bold my-auto"><i class="ti-plus mr-2"></i>Add Product</a>
               <button type="button" class="btn btn-success btn-sm mb-3 font-weight-bold my-auto" data-toggle="modal" data-target="#exportModal"><i class="ti-download mr-2"></i> Export</button>
-              {{-- <button type="button" class="btn btn-success btn-sm mb-3 font-weight-bold my-auto" data-toggle="modal" data-target="#importModal"><i class="ti-upload mr-2"></i> Import Excel</button> --}}
+              <button type="button" class="btn btn-success btn-sm mb-3 font-weight-bold my-auto" data-toggle="modal" data-target="#importModal"><i class="ti-upload mr-2"></i> Import Excel</button>
             </div>
             <form action="/product" method="get">
               <input type="text" name="search" class="form-control" placeholder="Search Product..." aria-label="Search...">
@@ -138,7 +138,7 @@
   </div>
 
   <!-- Modal Import -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div>
@@ -149,15 +149,19 @@
         <div class="modal-body d-flex flex-column ">
           <img src="../../template/images/warning.png" width="90px" class="mx-auto" alt="warning">
           <br>
-          <h3 class="text-center text-muted">Are you sure want to delete this product?</h3>
+          <h3 class="text-center text-muted">Upload excel (.xlsx) to import data Product</h3>
         </div>
         <div class="modal-footer mx-auto mb-4">
-          <form id="formDelete" method="POST">
-            @method('delete')
+          <form id="formDelete" method="POST" action="/product/import" enctype="multipart/form-data">
             @csrf
-            <button type="submit" class="btn btn-danger">Yes</button>
+            <div class="form-group">
+              <input type="file" name="file" id="file" accept=".xlsx" class="form-control" required>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn btn-success mr-2">Import File</button>
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancel</button>
+            </div>
           </form>
-          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
