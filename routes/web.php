@@ -20,8 +20,15 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/logout', [AuthController::class, 'logout']);
   
   Route::get('/', [DashboardController::class, 'index']);
+
+  Route::get('/product/export/{format}', [ProductController::class, 'export']);
+  Route::post('/product/import', [ProductController::class, 'import']);
   Route::resource('product', ProductController::class);
+
+  Route::get('/category/export/{type}', [CategoryController::class, 'export']);
+  Route::post('/category/import', [CategoryController::class, 'import']);
   Route::resource('category', CategoryController::class);
+  
   Route::get('/stock', [StockMovementController::class, 'index']);
   Route::get('/purchase', [PurchaseController::class, 'index']);
 

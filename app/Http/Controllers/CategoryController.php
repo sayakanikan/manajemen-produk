@@ -6,6 +6,10 @@ use Exception;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use App\Exports\ProductsExport;
+use App\Imports\ProductsImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
@@ -106,5 +110,28 @@ class CategoryController extends Controller
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function export($format)
+    {
+        $timestamp = Carbon::now()->format('Ymd_His');
+        $filename = "products_{$timestamp}";
+
+        if ($format === 'csv') {
+            return Excel::download(new ProductsExport, $filename . '.csv',  \Maatwebsite\Excel\Excel::CSV);
+        }
+
+        return Excel::download(new ProductsExport, $filename . '.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,csv'
+        ]);
+
+        Excel::import(new ProductsImport, $request->file('file'));
+
+        return back()->with('success', 'Data produk berhasil diimport!');
     }
 }
