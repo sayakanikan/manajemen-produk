@@ -15,4 +15,6 @@ Aplikasi manajemen produk yang bisa digunakan untuk memanajemen produk, kategori
 1. Login-Logout -> email: test@gmail.com || password: password
 2. CRUD Kategori
 3. CRUD Produk
-4. Pembelian Produk
+4. Monitoring Penambahan & Pengurangan Stok
+5. Monitoring Pembelian Produk
+6. Pembelian Produk
